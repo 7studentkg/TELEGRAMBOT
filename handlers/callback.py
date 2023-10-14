@@ -48,7 +48,7 @@ async def f_answer(call: types.CallbackQuery):
     print(call.data)
     await bot.send_message(
         chat_id=call.message.chat.id,
-        text = "Sam pashol nahuy GAY",
+        text = "Fuck you to, GAY",
 
     )
 

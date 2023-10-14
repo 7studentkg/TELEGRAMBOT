@@ -30,7 +30,7 @@ async def questionnaire_one_keyboard():
         callback_data="woman_questionnaire"
     )
     f_button = InlineKeyboardButton(
-        "pashol nahuy",
+        "Fuck you",
         callback_data="f_questionnaire"
     )
     markup.add(yes_button)
