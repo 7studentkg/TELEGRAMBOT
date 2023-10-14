@@ -27,7 +27,7 @@ async def start_button(message: types.Message):
 
     # )
 
-    with open("F:\VsCode\TelegramBot\my_first_bot\media\Bender.png", 'rb') as photo:
+    with open("F:\VsCode\TelegramBot\my_first_bot\media\Kill_all_humans.jpg", 'rb') as photo:
         await bot.send_photo(
             chat_id=message.chat.id,
             photo=photo,
