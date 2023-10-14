@@ -15,11 +15,22 @@ async def start_questionnaire(call: types.CallbackQuery):
 
 async def yes_answer(call: types.CallbackQuery):
     print(call.data)
-    await bot.send_message(
+    await bot.edit_message_text(
         chat_id=call.message.chat.id,
-        text = "I'm not surprised",
+        message_id=call.message.message_id,
+        text = "Are you gay?",
 
     )
+    await bot.send_message(
+        chat_id=call.message.chat.id,
+        text = f"Yes",
+    )
+    with open("F:\VsCode\TelegramBot\my_first_bot\media\РикардоМилас.gif", "rb") as animation:
+        await bot.send_animation(
+            chat_id= call.message.chat.id,
+            animation=animation,       # закоментировать анимацию!
+
+        )
 
 async def of_course_answer(call: types.CallbackQuery):
     print(call.data)
@@ -46,6 +57,7 @@ async def say_answer(call: types.CallbackQuery):
             photo=photo,
             caption=f"Why sweety?",
         )
+
 async def coffe_answer(call: types.CallbackQuery):
     print(call.data)
     await bot.send_message(
