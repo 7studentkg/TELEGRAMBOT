@@ -1,6 +1,6 @@
 from aiogram import executor
 from config import dp
-from handlers import start
+from handlers import start, callback
 from database.sql_commands import Databass
 
 
@@ -11,6 +11,7 @@ async def onstart_up(_):
 
 
 start.register_start_handlers(dp=dp)
+callback.register_callback_handlers(dp=dp)
 
 
 
@@ -19,4 +20,5 @@ if __name__ == "__main__":
         dp,
         skip_updates=True,
         on_startup=onstart_up
+
     )
