@@ -16,7 +16,7 @@ async def yes_answer(call: types.CallbackQuery):
     print(call.data)
     await bot.send_message(
         chat_id=call.message.chat.id,
-        text = "I knew, haha",
+        text = "I am not surprised",
 
     )
 
@@ -40,7 +40,7 @@ async def coffe_answer(call: types.CallbackQuery):
     print(call.data)
     await bot.send_message(
         chat_id=call.message.chat.id,
-        text = "Ok ☕",
+        text = "I am Bot ☕",
 
     )
 
@@ -48,7 +48,7 @@ async def f_answer(call: types.CallbackQuery):
     print(call.data)
     await bot.send_message(
         chat_id=call.message.chat.id,
-        text = "Fuck you to, GAY",
+        text = "Fuck you, piece of meat",
 
     )
 

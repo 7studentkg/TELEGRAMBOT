@@ -20,12 +20,21 @@ async def start_button(message: types.Message):
     #except sqlite3.IntegrityError:
     #    pass
 
-    await bot.send_message(
-        chat_id=message.chat.id,
-        text=f"Hello {message.from_user.first_name}",
-        reply_markup=await start_keyboard()
+    # await bot.send_message(
+    #     chat_id=message.chat.id,
+    #     text=f"Hello {message.from_user.first_name}",
+    #     reply_markup=await start_keyboard()
 
-    )
+    # )
+
+    with open("F:\VsCode\TelegramBot\my_first_bot\media\Bender.png", 'rb') as photo:
+        await bot.send_photo(
+            chat_id=message.chat.id,
+            photo=photo,
+            caption=f"Hi {message.from_user.first_name}, I'm BotBender 1.0",
+            reply_markup=await start_keyboard()
+
+        )
 
 
 
