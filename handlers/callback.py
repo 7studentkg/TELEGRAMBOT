@@ -25,12 +25,13 @@ async def yes_answer(call: types.CallbackQuery):
         chat_id=call.message.chat.id,
         text = f"Yes",
     )
-    with open("F:\VsCode\TelegramBot\my_first_bot\media\РикардоМилас.gif", "rb") as animation:
-        await bot.send_animation(
-            chat_id= call.message.chat.id,
-            animation=animation,       # закоментировать анимацию!
+    # with open("F:\VsCode\TelegramBot\my_first_bot\media\РикардоМилас.gif", "rb") as animation:
+    #     await bot.send_animation(
+    #         chat_id= call.message.chat.id,
+    #         animation=animation,       # закоментировать анимацию!
 
-        )
+    #     )
+
 
 async def of_course_answer(call: types.CallbackQuery):
     print(call.data)
@@ -60,6 +61,11 @@ async def say_answer(call: types.CallbackQuery):
 
 async def coffe_answer(call: types.CallbackQuery):
     print(call.data)
+    await bot.delete_message(
+        chat_id=call.message.chat.id,
+        message_id=call.message.message_id,
+
+    )
     await bot.send_message(
         chat_id=call.message.chat.id,
         text = "I'm a Bot ☕",
@@ -86,10 +92,10 @@ async def q_answer(call: types.CallbackQuery):
     #     chat_id=call.message.chat.id,
     #     text = f"All idiots: You, I, Elon Musk.\nThis is my philosophy",
     # )
-    with open("F:\VsCode\TelegramBot\my_first_bot\media\Philosophy.jpg", "rb") as photo:
-        await bot.send_photo(
+    with open("F:\VsCode\TelegramBot\my_first_bot\media\All_idiots.gif", "rb") as animation:
+        await bot.send_animation(
             chat_id = call.message.chat.id,
-            photo=photo,
+            animation=animation,
             caption = f"All idiots: You, I, even Elon Musk.\nThis is my philosophy",
 
         )
