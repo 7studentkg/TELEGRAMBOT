@@ -43,5 +43,14 @@ async def questionnaire_one_keyboard():
     markup.add(q_button)
     markup.add(f_button)
     markup.add(woman_button)
+    return markup
 
+async def admin_keyboard():
+    markup = InlineKeyboardMarkup()
+    admin_user_list_button = InlineKeyboardButton(
+        "User list",
+        callback_data="admin_user_list"
+    )
+
+    markup.add(admin_user_list_button)
     return markup

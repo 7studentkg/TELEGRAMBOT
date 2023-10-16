@@ -1,9 +1,7 @@
 from aiogram import types, Dispatcher
 from config import bot
 from keyboards.inline_buttons import questionnaire_one_keyboard
-import time
 
-time3 = time.sleep(3)
 
 async def start_questionnaire(call: types.CallbackQuery):
     print(call.data)
