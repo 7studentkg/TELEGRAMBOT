@@ -33,6 +33,8 @@ async def chat_actions(message: types.Message):
                     chat_id=message.chat.id,
                     text=f"Don't use bad words in my group !\n"
                         f'Username: @{message.from_user.username}\n'
+                        f'Ты очень подозрительный\nВозможно можешь быть забанен !'
+
 
                 )
     else:
