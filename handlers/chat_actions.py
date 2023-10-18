@@ -3,6 +3,8 @@ from config import bot
 from database.sql_commands import Database
 import sqlite3
 
+
+
 async def chat_actions(message: types.Message):
     ban_words = ['fuck', 'bitch', 'damn', 'asshole', 'cunt'
                   'dick', 'pussy', 'motherfucker', 'ass', 'bastard', 'dickhead']
