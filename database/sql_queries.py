@@ -9,18 +9,6 @@ CREATE_USER_TABLE_QUERY = '''
     )
 '''
 
-INSERT_USERS_QUERY = '''
-    INSERT OR IGNORE INTO telegram_users VALUES (?,?,?,?,?)
-
-'''
-
-SELECT_ALL_USERS_QUERY ='''
-    SELECT * FROM telegram_users
-'''
-
-SELECT_USERS_QUERY ='''
-    SELECT * FROM telegram_users WHERE TELEGRAM_ID = ?
-'''
 
 CREATE_BAN_USERS_TABLE_QUERY = '''
     CREATE TABLE IF NOT EXISTS ban_users (
@@ -32,6 +20,39 @@ CREATE_BAN_USERS_TABLE_QUERY = '''
     )
 '''
 
+CREATE_USER_FROM_TABLE_QUERY = '''
+    CREATE TABLE IF NOT EXISTS user_form(
+    ID INTEGER PRIMERY KEY,
+    TELEGRAM_ID INTEGER,
+    NICKNAME CHAR(50),
+    HOBBY CHAR(50),
+    AGE INTEGER,
+    OCCUPATION CHAR(50),
+    PHOTO TEXT,
+    UNIQUE (TELEGRAM_ID)
+
+    )
+
+'''
+
+INSERT_USERS_QUERY = '''
+    INSERT OR IGNORE INTO telegram_users VALUES (?,?,?,?,?)
+
+'''
+
+INSERT_USERS_FORM_QUERY = '''
+    INSERT INTO user_form VALUES (?,?,?,?,?,?,?)
+
+'''
+
+SELECT_ALL_USERS_QUERY ='''
+    SELECT * FROM telegram_users
+'''
+
+SELECT_USERS_QUERY ='''
+    SELECT * FROM telegram_users WHERE TELEGRAM_ID = ?
+'''
+
 INSERT_BAN_USERS_QUERY = '''
     INSERT INTO ban_users VALUES (?,?,?,?)
 
@@ -41,6 +62,10 @@ UPDATE_BAN_USERS_COUNT_QUERY = '''
     UPDATE ban_users SET COUNT = COUNT + 1 WHERE TELEGRAM_ID = ?
 
 '''
+SELECT_USERS_FORM_QUERY ='''
+    SELECT * FROM user_form WHERE TELEGRAM_ID = ?
+'''
+
 
 # CREAT_BAN_TABLE = '''
 #     CREAT TABKLE IF NOT EXISTS ban_table (
@@ -49,18 +74,4 @@ UPDATE_BAN_USERS_COUNT_QUERY = '''
 #     COUNT INTEGER,
 #     UNIQUE (TELEGRAM_ID)
 #     )
-# '''
-
-# CREATE_USER_FROM_TABLE_QUERY = '''
-#     CREATE TABLE IF NOT EXISTS user_form(
-#     ID INTEGER PRIMERY KEY,
-#     TELEGRAM_ID INTEGER,
-#     NICKNAME CHAR(50),
-#     BIO TEXT,
-#     AGE INTEGER,
-#     PHOTO TEXT,
-#     UNIQUE (TELEGRAM_ID)
-
-#     )
-
 # '''

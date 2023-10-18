@@ -42,8 +42,9 @@ async def load_nickname(message: types.Message,
 async def load_hobby(message: types.Message,
                         state: FSMContext):
 
-    async with State.proxy() as data:
+    async with state.proxy() as data:
         data['hobby'] = message.text
+        print(data)
 
     await bot.send_message(
         chat_id = message.from_user.id,
@@ -64,8 +65,9 @@ async def load_age(message: types.Message,
             await state.finish()
             return
 
-        async with State.proxy() as data:
+        async with state.proxy() as data:
             data['age'] = message.text
+            print(data)
 
         await bot.send_message(
             chat_id = message.from_user.id,
@@ -83,8 +85,9 @@ async def load_age(message: types.Message,
 async def load_occupation(message: types.Message,
                         state: FSMContext):
 
-    async with State.proxy() as data:
+    async with state.proxy() as data:
         data['occupation'] = message.text
+        print(data)
 
     await bot.send_message(
         chat_id = message.from_user.id,
@@ -94,10 +97,21 @@ async def load_occupation(message: types.Message,
 
 async def load_photo(message: types.Message,
                         state: FSMContext):
+    print(message.photo, message.text)
     path = await message.photo[-1].download(
         destination_dir='F:\VsCode\TelegramBot\my_first_bot\media\Registration_photo'
     )
     async with state.proxy() as data:
+        Database().sql_insert_user_form_query(
+            telegram_id=message.from_user.id,
+            nickname=data['nickname'],
+            hobby=data['hobby'],
+            age=data['age'],
+            occupation=data['occupation'],
+            photo = path.name,
+
+
+        )
         with open (path.name, 'rb') as photo:
             await bot.send_photo(
                 chat_id = message.chat.id,
@@ -114,6 +128,23 @@ async def load_photo(message: types.Message,
             text = 'Registration successfully '
         )
         await state.finish()
+
+
+
+async def my_profile_call(call: types.CallbackQuery):
+    user_form = Database().sql_select_user_form_query(
+        telegram_id=call.from_user.id,
+    )
+    with open (user_form[0]["photo"], 'rb') as photo:
+            await bot.send_photo(
+                chat_id = call.from_user.id,
+                photo = photo,
+                caption=f"Nickname: {user_form[0]['nickname']}\n"
+                        f"Hobby: {user_form[0]['hobby']}\n"
+                        f"Age: {user_form[0]['age']}\n"
+                        f"Occupation: {user_form[0]['occupation']}\n"
+
+            )
 
 
 
@@ -135,3 +166,4 @@ def register_fsm_form_handlers(dp: Dispatcher):
     dp.register_message_handler(load_photo,
                                 state = FormStates.photo,
                                 content_types =types.ContentTypes.PHOTO )
+    dp.register_callback_query_handler(my_profile_call, lambda call: call.data == 'my_profile')

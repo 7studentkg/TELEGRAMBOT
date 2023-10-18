@@ -15,6 +15,7 @@ class Database:
 
         self.connection.execute(sql_queries.CREATE_USER_TABLE_QUERY)
         self.connection.execute(sql_queries.CREATE_BAN_USERS_TABLE_QUERY)
+        self.connection.execute(sql_queries.CREATE_USER_FROM_TABLE_QUERY)
         self.connection.commit()
 
     def sql_insert_user_query(self, telegram_id, username, first_name, last_name):
@@ -62,5 +63,28 @@ class Database:
 
         return self.cursor.execute(
             sql_queries.SELECT_USERS_QUERY,
+            (telegram_id,)
+        ).fetchall()
+
+    def sql_insert_user_form_query(self, telegram_id, nickname, hobby, age, occupation, photo):
+        self.cursor.execute(
+            sql_queries.INSERT_USERS_FORM_QUERY,
+            (None, telegram_id, nickname, hobby, age, occupation, photo))
+        self.connection.commit()
+
+    def sql_select_user_form_query(self,telegram_id):
+        self.cursor.row_factory = lambda cursor, row: {
+            'id' : row[0],
+            'telegram_id' : row[1],
+            'nickname' : row[2],
+            'hobby' : row[3],
+            'age' : row[4],
+            'occupation' : row[5],
+            'photo' : row[6],
+
+        }
+
+        return self.cursor.execute(
+            sql_queries.SELECT_USERS_FORM_QUERY,
             (telegram_id,)
         ).fetchall()
