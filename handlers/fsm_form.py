@@ -3,8 +3,16 @@ from config import bot
 from database.sql_commands import Database
 from aiogram.dispatcher import FSMContext
 from aiogram.dispatcher.filters.state import State, StatesGroup
-import sqlite3
+from keyboards.inline_buttons import (
+    like_dislike_keyboard,
+    edit_delete_form_keyboard,
+    my_profile_regiter
 
+)
+import sqlite3
+import sqlite3
+import random
+import re
 
 
 class FormStates(StatesGroup):
@@ -20,7 +28,7 @@ class FormStates(StatesGroup):
 
 async def fsm_start(call: types.CallbackQuery):
     await bot.send_message(
-        chat_id = call.from_user.id,
+        chat_id = call.from_user.id, # call.chat.id / chat_id
         text = 'Send me your Nickname, please.'
     )
     await FormStates.nickname.set()
@@ -135,17 +143,78 @@ async def my_profile_call(call: types.CallbackQuery):
     user_form = Database().sql_select_user_form_query(
         telegram_id=call.from_user.id,
     )
-    with open (user_form[0]["photo"], 'rb') as photo:
-            await bot.send_photo(
-                chat_id = call.from_user.id,
-                photo = photo,
-                caption=f"Nickname: {user_form[0]['nickname']}\n"
-                        f"Hobby: {user_form[0]['hobby']}\n"
-                        f"Age: {user_form[0]['age']}\n"
-                        f"Occupation: {user_form[0]['occupation']}\n"
+    try:
+        with open (user_form[0]["photo"], 'rb') as photo:
+                await bot.send_photo(
+                    chat_id = call.from_user.id,
+                    photo = photo,
+                    caption=f"Nickname: {user_form[0]['nickname']}\n"
+                            f"Hobby: {user_form[0]['hobby']}\n"
+                            f"Age: {user_form[0]['age']}\n"
+                            f"Occupation: {user_form[0]['occupation']}\n",
+                    reply_markup=await edit_delete_form_keyboard()
 
+                )
+
+    except IndexError:
+        await bot.send_message(
+            chat_id = call.from_user.id,
+            text = "You have no form, please register",
+            reply_markup= await my_profile_regiter()
+        )
+
+
+async def random_profiles_call(call: types.CallbackQuery):
+    users = Database().sql_select_all_user_form_query()
+    try:
+        random_form = random.choice(users)
+    except IndexError:
+        await bot.send_message(
+            chat_id= call.from_user.id,
+            text = 'Profile list empty\n' # с этим еще надо поработать !
+            "Please register",
+            reply_markup= await my_profile_regiter()
+        )
+    with open(random_form['photo'], 'rb') as photo: # -
+        await bot.send_photo(
+            chat_id = call.from_user.id,
+            photo = photo,
+            caption=f"Nickname: {random_form['nickname']}\n"
+                    f"Hobby: {random_form['hobby']}\n"
+                    f"Age: {random_form['age']}\n"
+                    f"Occupation: {random_form['occupation']}\n",
+            reply_markup= await like_dislike_keyboard(
+                owner_tg_id= random_form['telegram_id']
             )
 
+        )
+
+
+async def like_detect_call(call: types.CallbackQuery):
+    owner_tg_id = re.sub("user_form_like_", "", call.data)
+    print(owner_tg_id)
+    try:
+        Database().sql_insert_like_query(
+            owner = owner_tg_id,
+            liker=call.from_user.id
+        )
+    except sqlite3.IntegrityError:
+        await bot.send_message(
+            chat_id=call.from_user.id,
+            text = 'You already liked form before'
+        )
+
+    finally:
+        await random_profiles_call(call=call)
+
+async def delete_form_call(call: types.CallbackQuery):
+    Database().sql_delete_form_query(
+        owner = call.from_user.id
+    )
+    await bot.send_message(
+        chat_id= call.from_user.id,
+        text = 'Your form deleted successfully'
+    )
 
 
 
@@ -167,3 +236,9 @@ def register_fsm_form_handlers(dp: Dispatcher):
                                 state = FormStates.photo,
                                 content_types =types.ContentTypes.PHOTO )
     dp.register_callback_query_handler(my_profile_call, lambda call: call.data == 'my_profile')
+    dp.register_callback_query_handler(random_profiles_call,
+                                        lambda call: call.data == 'random_profiles')
+    dp.register_callback_query_handler(like_detect_call,
+                                        lambda call: 'user_form_like_' in call.data)
+    dp.register_callback_query_handler(delete_form_call,
+                                        lambda call: call.data == 'delete_profile')

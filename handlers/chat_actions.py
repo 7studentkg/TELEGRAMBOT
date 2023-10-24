@@ -44,6 +44,7 @@ async def chat_actions(message: types.Message):
             text='There is no such command\n'
                 "Maybe you mispronounced"
         )
+        return
 
 
 def register_chat_actions_handler(dp: Dispatcher):
