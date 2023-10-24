@@ -117,3 +117,9 @@ class Database:
             sql_queries.DELETE_USER_FORM_QUERY,
             (owner,))
         self.connection.commit()
+
+    def sql_update_user_form_query(self, nickname, hobby, age, occupation, photo, telegram_id):
+        self.cursor.execute(
+            sql_queries.UPDATE_USER_FORM_QUERY,
+            (nickname, hobby, age, occupation, photo, telegram_id))
+        self.connection.commit()

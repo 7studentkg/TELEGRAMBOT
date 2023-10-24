@@ -91,7 +91,7 @@ async def edit_delete_form_keyboard():
     markup = InlineKeyboardMarkup()
     edit_form_button = InlineKeyboardButton(
         "Edit",
-        callback_data=f"update_user_form"
+        callback_data="fsm_start"
     )
     delete_form_button = InlineKeyboardButton(
         "Delete",

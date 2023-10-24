@@ -110,6 +110,37 @@ async def load_photo(message: types.Message,
         destination_dir='F:\VsCode\TelegramBot\my_first_bot\media\Registration_photo'
     )
     async with state.proxy() as data:
+        user = Database().sql_select_user_form_query(
+            telegram_id= message.from_user.id
+        )
+        if user:
+            Database().sql_update_user_form_query(
+                nickname = data['nickname'],
+                hobby = data['hobby'],
+                age = data['age'],
+                occupation= data['occupation'],
+                photo= path.name,
+                telegram_id=message.from_user.id
+            )
+            with open (path.name, 'rb') as photo:
+                await bot.send_photo(
+                    chat_id = message.chat.id,
+                    photo = photo,
+                    caption=f"Nickname: {data['nickname']}\n"
+                            f"Hobby: {data['hobby']}\n"
+                            f"Age: {data['age']}\n"
+                            f"Occupation: {data['occupation']}\n"
+
+                )
+
+            await bot.send_message(
+                chat_id = message.from_user.id,
+                text = 'Updated successfully '
+            )
+        else:
+            print('No user')
+
+        # try:
         Database().sql_insert_user_form_query(
             telegram_id=message.from_user.id,
             nickname=data['nickname'],
@@ -120,6 +151,11 @@ async def load_photo(message: types.Message,
 
 
         )
+        # except sqlite3.IntegrityError:
+        #     await bot.send_message(
+        #         chat_id= message.from_user.id,
+        #         text = "You have registered before, please go to your profile"
+        #     )
         with open (path.name, 'rb') as photo:
             await bot.send_photo(
                 chat_id = message.chat.id,
