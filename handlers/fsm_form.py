@@ -28,7 +28,7 @@ class FormStates(StatesGroup):
 
 async def fsm_start(call: types.CallbackQuery):
     await bot.send_message(
-        chat_id = call.from_user.id, # call.chat.id / chat_id
+        chat_id = call.from_user.id, # call.chat.id / chat_id //
         text = 'Send me your Nickname, please.'
     )
     await FormStates.nickname.set()

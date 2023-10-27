@@ -4,7 +4,8 @@ from handlers import (
     start,
     callback,
     chat_actions,
-    fsm_form
+    fsm_form,
+    reference_menu
 )
 
 from database.sql_commands import Database
@@ -18,6 +19,7 @@ async def onstart_up(_):
 start.register_start_handlers(dp=dp)
 callback.register_callback_handlers(dp=dp)
 fsm_form.register_fsm_form_handlers(dp=dp)
+reference_menu.register_reference_menu_handlers(dp=dp)
 chat_actions.register_chat_actions_handler(dp=dp)
 
 
