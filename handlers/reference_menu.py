@@ -60,6 +60,12 @@ async def referral_list_call(call: types.CallbackQuery):
             text=text,
             parse_mode=types.ParseMode.MARKDOWN
         )
+    else:
+        await bot.send_message(
+            chat_id=call.from_user.id,
+            text="You don't have a referral user "
+        )
+
 
 
 def register_reference_menu_handlers(dp: Dispatcher):
