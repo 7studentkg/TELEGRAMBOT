@@ -23,11 +23,16 @@ async def start_keyboard():
         "Referral Menu",
         callback_data="reference_menu"
     )
+    anime_films_button = InlineKeyboardButton(
+        "5 Anime by Hayao Miyazaki",
+        callback_data="anime_films"
+    )
     markup.add(registration_button)
     markup.add(my_profile_button)
     markup.add(random_profile_button)
-    markup.add(questionnaire_button)
     markup.add(reference_menu_button)
+    markup.add(questionnaire_button)
+    markup.add(anime_films_button)
 
 
     return markup
