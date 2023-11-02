@@ -10,7 +10,6 @@ headers = {
   'Accept-Encoding': 'gzip, deflate, br',
   'Referer': 'https://www.google.com/',
   'Connection': 'keep-alive',
-  'Cookie': '_ga_BPVGCQN0CF=GS1.1.1698692534.4.1.1698692645.9.0.0; _ga=GA1.2.1461913855.1698489216; cto_bundle=F3USgV9zeVZnRDVidEglMkJCUmI5UGxpRWYwMCUyRmRwR295Rk0wb1lMYUFCZWl0VGpSRUpjZXhyOSUyRmhvUlNPMmJDJTJGVkVpODElMkJvSkNwb2tFYUp5WlBSdUJRRWdaT2k2SDVMaTJKN1dzeW9QUmlFWmslMkY5b1hFTFVpa2cyVU9pb1lvZWp1UXlCTEY2JTJGTE9zelgwJTJGdWg2UUpsRENaRllnJTNEJTNE; _gid=GA1.2.1263783423.1698687351',
 
 }
 

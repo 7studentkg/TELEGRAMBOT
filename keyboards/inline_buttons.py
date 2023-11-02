@@ -27,12 +27,17 @@ async def start_keyboard():
         "5 Anime by Hayao Miyazaki",
         callback_data="anime_films"
     )
+    news_ecology = InlineKeyboardButton(
+        "5 News Ecology",
+        callback_data="new_ecology"
+    )
     markup.add(registration_button)
     markup.add(my_profile_button)
     markup.add(random_profile_button)
     markup.add(reference_menu_button)
     markup.add(questionnaire_button)
     markup.add(anime_films_button)
+    markup.add(news_ecology)
 
 
     return markup

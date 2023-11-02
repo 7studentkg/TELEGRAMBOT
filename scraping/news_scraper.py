@@ -6,7 +6,7 @@ import requests
 class NewsScraper:
     URL = 'https://www.film.ru/compilation/luchshie-multfilmy-hayao-miyadzaki'
     LINK_A = '//div[@xmlns="http://www.w3.org/1999/html"]/div/a/@href'
-    PLUS_U = 'https://www.film.ru'
+    PLUS_A = 'https://www.film.ru'
 
 
     def parse_data(self):

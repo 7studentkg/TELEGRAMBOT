@@ -2,6 +2,7 @@ from aiogram import types, Dispatcher
 from config import bot
 from keyboards.inline_buttons import questionnaire_one_keyboard
 from scraping.news_scraper import NewsScraper
+from scraping.async_scraper import AsyncNewsScraper
 
 
 async def start_questionnaire(call: types.CallbackQuery):
@@ -107,9 +108,24 @@ async def anime_films(call: types.CallbackQuery):
     for link in links:
         await bot.send_message(
             chat_id=call.message.chat.id,
-            text = scraper.PLUS_U + link,
+            text = scraper.PLUS_A + link,
 
         )
+
+async def news_ecology(call: types.CallbackQuery):
+    print(call.data)
+    scraper = AsyncNewsScraper()
+    links = scraper.parse_pages()
+
+
+    for link in links:
+        await bot.send_message(
+            chat_id=call.message.chat.id,
+            text = scraper.PLUS_E + link,
+
+        )
+
+
 
 
 def register_callback_handlers(dp: Dispatcher):
@@ -129,3 +145,5 @@ def register_callback_handlers(dp: Dispatcher):
                                        lambda call: call.data == "q_questionnaire")
     dp.register_callback_query_handler(anime_films,
                                        lambda call: call.data == "anime_films")
+    dp.register_callback_query_handler(news_ecology,
+                                       lambda call: call.data == "new_ecology")
