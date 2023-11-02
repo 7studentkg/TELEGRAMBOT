@@ -21,11 +21,6 @@ class AsyncNewsScraper:
             yield page
 
 
-    async def get_url(self, client, url):
-        response = await client.get(url)
-        print(response.url)
-        await self.scrape_links(html=response.text, client=client)
-
 
     async def parse_pages(self):
         async with httpx.AsyncClient(headers=self.Headers) as client:
@@ -37,10 +32,17 @@ class AsyncNewsScraper:
                     )
                 )
 
+    async def get_url(self, client, url):
+        response = await client.get(url)
+        print(response.url)
+        await self.scrape_links(html=response.text, client=client)
+
 
     async def scrape_links(self, html, client):
         tree = Selector(text=html)
         links = tree.xpath(self.LINK_E).extract()
+        del links[-1]
+
         for link in links:
             print(link)
 

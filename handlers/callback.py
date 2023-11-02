@@ -115,10 +115,12 @@ async def anime_films(call: types.CallbackQuery):
 async def news_ecology(call: types.CallbackQuery):
     print(call.data)
     scraper = AsyncNewsScraper()
-    links = scraper.parse_pages()
+    links = await scraper.parse_pages()
+    print(links)
 
 
     for link in links:
+
         await bot.send_message(
             chat_id=call.message.chat.id,
             text = scraper.PLUS_E + link,

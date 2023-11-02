@@ -15,7 +15,7 @@ class NewsScraper:
         links = tree.xpath(self.LINK_A).extract()
 
         for link in links:
-            print(self.PLUS_U+link)
+            print(self.PLUS_A+link)
 
         return links[:5]
 
