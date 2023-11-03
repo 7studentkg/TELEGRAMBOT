@@ -29,7 +29,7 @@ async def start_keyboard():
     )
     news_ecology = InlineKeyboardButton(
         "5 News Ecology",
-        callback_data="new_ecology"
+        callback_data="news_ecology"
     )
     markup.add(registration_button)
     markup.add(my_profile_button)

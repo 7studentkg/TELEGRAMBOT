@@ -3,6 +3,7 @@ from config import bot
 from keyboards.inline_buttons import questionnaire_one_keyboard
 from scraping.news_scraper import NewsScraper
 from scraping.async_scraper import AsyncNewsScraper
+import asyncio
 
 
 async def start_questionnaire(call: types.CallbackQuery):
@@ -116,16 +117,18 @@ async def news_ecology(call: types.CallbackQuery):
     print(call.data)
     scraper = AsyncNewsScraper()
     links = await scraper.parse_pages()
+    # links = asyncio.run(scraper.parse_pages())
     print(links)
 
 
     for link in links:
-
+        # print(links)
         await bot.send_message(
             chat_id=call.message.chat.id,
             text = scraper.PLUS_E + link,
 
         )
+
 
 
 
@@ -148,4 +151,4 @@ def register_callback_handlers(dp: Dispatcher):
     dp.register_callback_query_handler(anime_films,
                                        lambda call: call.data == "anime_films")
     dp.register_callback_query_handler(news_ecology,
-                                       lambda call: call.data == "new_ecology")
+                                       lambda call: call.data == "news_ecology")
