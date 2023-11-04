@@ -101,33 +101,33 @@ async def q_answer(call: types.CallbackQuery):
 
         )
 
-async def anime_films(call: types.CallbackQuery):
-    print(call.data)
-    scraper = NewsScraper()
-    links = scraper.parse_data()
+# async def anime_films(call: types.CallbackQuery):
+#     print(call.data)
+#     scraper = NewsScraper()
+#     links = scraper.parse_data()
 
-    for link in links:
-        await bot.send_message(
-            chat_id=call.message.chat.id,
-            text = scraper.PLUS_A + link,
+#     for link in links:
+#         await bot.send_message(
+#             chat_id=call.message.chat.id,
+#             text = scraper.PLUS_A + link,
 
-        )
+#         )
 
-async def news_ecology(call: types.CallbackQuery):
-    print(call.data)
-    scraper = AsyncNewsScraper()
-    links = await scraper.parse_pages()
-    # links = asyncio.run(scraper.parse_pages())
-    print(links)
+# async def news_ecology(call: types.CallbackQuery):
+#     print(call.data)
+#     scraper = AsyncNewsScraper()
+#     links = await scraper.parse_pages()
+#     # links = asyncio.run(scraper.parse_pages())
+#     print(links)
 
 
-    for link in links:
-        # print(links)
-        await bot.send_message(
-            chat_id=call.message.chat.id,
-            text = scraper.PLUS_E + link,
+#     for link in links:
+#         # print(links)
+#         await bot.send_message(
+#             chat_id=call.message.chat.id,
+#             text = scraper.PLUS_E + link,
 
-        )
+#         )
 
 
 
@@ -148,7 +148,7 @@ def register_callback_handlers(dp: Dispatcher):
                                        lambda call: call.data == "f_questionnaire")
     dp.register_callback_query_handler(q_answer,
                                        lambda call: call.data == "q_questionnaire")
-    dp.register_callback_query_handler(anime_films,
-                                       lambda call: call.data == "anime_films")
-    dp.register_callback_query_handler(news_ecology,
-                                       lambda call: call.data == "news_ecology")
+    # dp.register_callback_query_handler(anime_films,
+    #                                    lambda call: call.data == "anime_films")
+    # dp.register_callback_query_handler(news_ecology,
+    #                                    lambda call: call.data == "news_ecology")
